@@ -1,0 +1,26 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "file process",
+  "main": "script.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest",
+    "test:unit": "jest __tests__/unit/unit.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TayyabaTahseen/swedcon.git"
+  },
+  "author": "Tayyaba Tahseen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TayyabaTahseen/swedcon/issues"
+  },
+  "homepage": "https://github.com/TayyabaTahseen/swedcon#readme",
+  "dependencies": {
+    "jest": "^29.7.0",
+    "modules": "^0.4.0",
+    "node": "^22.7.0"
+  }
+}
