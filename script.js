@@ -1,50 +1,63 @@
-function processFile() {
-    const fileInput = document.getElementById('fileInput');
-    const resultDiv = document.getElementById('result');
 
-    if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
+// Handle file input and process the text on form submission
+document.getElementById('textForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const fileInput = document.getElementById('inputFile');
+    const file = fileInput.files[0];
+
+    if (file) {
         const reader = new FileReader();
 
-        reader.onload = function (event) {
-            const text = event.target.result;
+        reader.onload = function (e) {
+            const text = e.target.result;
             const processedText = processText(text);
-
-            resultDiv.textContent = processedText;
+            document.getElementById('outputText').innerHTML = processedText;
         };
 
         reader.readAsText(file);
     }
-}
+    function processText(text) {
+        if (!text) return text; // Handle empty text
 
-function processText(text) {
-    const wordCounts = countWords(text);
-    const mostUsedWord = findMostUsedWord(wordCounts);
+        // Remove punctuation and split the text into words
+        const words = text.match(/\b(\w+)\b/g);
 
-    return text.replace(new RegExp(`\\b${mostUsedWord}\\b`, 'g'), `foo{ ${mostUsedWord} } bar`);
-}
+        if (!words) return text; // Handle cases where no words are found
 
-function countWords(text) {
-    const words = text.split(/\s+/);
-    const wordCounts = {};
+        // Count occurrences of each word
+        const wordCount = words.reduce((count, word) => {
+            word = word.toLowerCase(); // Make it case-insensitive
+            count[word] = (count[word] || 0) + 1;
+            return count;
+        }, {});
 
-    for (const word of words) {
-        wordCounts[word] = (wordCounts[word] || 0) + 1;
-    }
+        // Find the most common word
+        const mostCommonWord = Object.keys(wordCount).reduce((a, b) =>
+            wordCount[a] > wordCount[b] ? a : b
+        );
 
-    return wordCounts;
-}
+        // Check if the most common word is unique
+        const maxCount = wordCount[mostCommonWord];
+        const isUnique = Object.values(wordCount).filter(count => count === maxCount).length === 1;
 
-function findMostUsedWord(wordCounts) {
-    let mostUsedWord = '';
-    let maxCount = 0;
-
-    for (const word in wordCounts) {
-        if (wordCounts[word] > maxCount) {
-            mostUsedWord = word;
-            maxCount = wordCounts[word];
+        // If there's no unique most common word, return the text unchanged
+        if (maxCount === 1 || !isUnique) {
+            return text;
         }
+
+        // Use regex to replace all instances of the most common word with the highlighted version
+        const highlightedText = text.replace(
+            new RegExp(`\\b${mostCommonWord}\\b`, 'gi'),
+            `<span class="highlight">foo(${mostCommonWord})bar</span>`
+        );
+
+        return highlightedText;
     }
 
-    return mostUsedWord;
-}
+    module.export = processText(text);
+
+
+
+
+});// Function to process the text and highlight the most common word

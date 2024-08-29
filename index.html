@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Text Processor</title>
-    <link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Highlighter</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1 id="heading">Welcome to File Processing Application</h1>
-    <br>
-    <input type="file" id="fileInput" class="button">
-    <button onclick="processFile()" class="butn">Process File</button>
-    <br>
-    <div id="result">Processed Text</div>
+    <div class="container">
+        <h1>Welcome to File processing Application</h1>
+        <form id="textForm">
+            <input type="file" id="inputFile">
+            <button type="submit">Process File</button>
+        </form>
+        <h2>Processed Text:</h2>
+        <div id="outputText"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 
 </html>
