@@ -60,4 +60,4 @@ document.getElementById('textForm').addEventListener('submit', function (event) 
 
 
 
-});// Function to process the text and highlight the most common word
+});
